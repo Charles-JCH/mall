@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: order-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.31.105.105
+    sentinel:
+      transport:
+        dashboard: 172.31.105.105:8080
+        enable: true

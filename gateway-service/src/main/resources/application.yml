@@ -2,8 +2,6 @@ server:
   port: 88
 
 spring:
-  application:
-    name: gateway-service
   cloud:
     gateway:
       routes:
@@ -31,6 +29,3 @@ spring:
             - Path=/api/user/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
-    nacos:
-      discovery:
-        server-addr: 172.31.105.105

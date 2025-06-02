@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: product-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.31.105.105

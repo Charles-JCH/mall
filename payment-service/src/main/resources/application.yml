@@ -7,12 +7,6 @@ alipay:
   sign-type: 'RSA2'
   charset: 'utf-8'
   gateway-url: 'https://openapi-sandbox.dl.alipaydev.com/gateway.do'
+
 server:
   port: 13000
-spring:
-  application:
-    name: user-service
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 172.31.105.105

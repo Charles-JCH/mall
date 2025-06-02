@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: inventory-service
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.31.105.105
