@@ -1,0 +1,18 @@
+server:
+  port: 9100
+
+jwt:
+  private-key-path: classpath:rsa/private_key.pem
+  public-key-path: classpath:rsa/public_key.pem
+  expiration: 86400
+
+security:
+  enable: true
+  ignore-urls:
+    - /auth/login
+    - /auth/register
+    - /auth/public-key
+
+logging:
+  level:
+    com.alibaba.cloud.nacos: DEBUG

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.mapper.UserInfoMapper">
+
+    <!--结果映射-->
+    <resultMap id="BaseResultMap" type="com.mall.entity.UserInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="VARCHAR"/>
+        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="email" property="email" jdbcType="VARCHAR"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="password" property="password" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="is_delete" property="isDelete" jdbcType="TINYINT"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="BaseSql">
+        id
+        ,
+        user_id,
+        username,
+        email,
+        phone,
+        password,
+        status,
+        is_delete,
+        create_time,
+        update_time
+    </sql>
+
+    <select id="selectById" parameterType="string" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseSql"/>
+        FROM user_info
+        WHERE user_id = #{id}
+    </select>
+
+    <select id="selectByCondition" parameterType="com.mall.entity.UserInfo" resultMap="BaseResultMap">
+        SELECT
+        <include refid="BaseSql"/>
+        FROM user_info
+        <where>
+            <if test="username != null and username != ''">
+                AND username Like concat('%', #{username}, '%')
+            </if>
+            <if test="email != null and email != ''">
+                AND email Like concat('%', #{email}, '%')
+            </if>
+            <if test="phone != null and phone != ''">
+                AND phone = #{phone}
+            </if>
+            <if test="status != null">
+                AND status = #{status}
+            </if>
+        </where>
+        ORDER BY update_time DESC
+    </select>
+
+    <insert id="insert" parameterType="com.mall.entity.UserInfo">
+        INSERT INTO user_info (username, email, phone, password, status, is_delete, create_time, update_time)
+        VALUES (#{username}, #{email}, #{phone}, #{password}, #{status}, #{isDelete}, NOW(), NOW())
+    </insert>
+
+    <insert id="insertBatch" parameterType="list">
+        INSERT INTO user_info (username, email, phone, password, status, is_delete, create_time, update_time)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.username}, #{item.email}, #{item.phone}, #{item.password}, #{item.status}, #{item.isDelete}, NOW(), NOW())
+        </foreach>
+    </insert>
+
+    <update id="update" parameterType="com.mall.entity.UserInfo">
+        UPDATE user_info
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="email != null">
+                email = #{email},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="phone != null">
+                phone = #{phone},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="string">
+        DELETE
+        FROM users
+        WHERE id = #{id}
+    </delete>
+
+    <delete id="deleteBatch" parameterType="list">
+        DELETE
+        FROM users
+        WHERE id IN
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

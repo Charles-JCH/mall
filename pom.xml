@@ -1,35 +1,53 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>guli-test</artifactId>
+    <groupId>com.mall</groupId>
+    <artifactId>mini-mall</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>guli-test</name>
+    <name>mini-mall</name>
 
     <modules>
         <module>common</module>
         <!--9000-->
-        <module>product-service</module>
-        <!--10000-->
-        <module>order-service</module>
-        <!--11000-->
-        <module>inventory-service</module>
-        <!--12000-->
-        <module>user-service</module>
-        <!--13000-->
-        <module>payment-service</module>
-        <!--88-->
         <module>gateway-service</module>
+        <!--9100-->
+        <module>auth-service</module>
+        <!--9200-->
+        <module>user-service</module>
+        <!--9300-->
+        <module>product-service</module>
+        <!--9400-->
+        <module>cart-service</module>
+        <!--9500-->
+        <module>order-service</module>
+        <!--9600-->
+        <module>inventory-service</module>
+        <!--9700-->
+        <module>payment-service</module>
+        <!--9800-->
+        <module>search-service</module>
+        <!--9900-->
+        <module>coupon-service</module>
+        <!--10000-->
+        <module>sap-service</module>
+        <module>inventory-api</module>
     </modules>
 
     <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot-dependencies.version>2.3.7.RELEASE</spring-boot-dependencies.version>
-        <spring-cloud-dependencies.version>Hoxton.SR9</spring-cloud-dependencies.version>
-        <spring-cloud-alibaba-dependencies.version>2.2.6.RELEASE</spring-cloud-alibaba-dependencies.version>
+        <!--        <spring-boot-dependencies.version>2.3.7.RELEASE</spring-boot-dependencies.version>-->
+        <!--        <spring-cloud-dependencies.version>Hoxton.SR9</spring-cloud-dependencies.version>-->
+        <!--        <spring-cloud-alibaba-dependencies.version>2.2.6.RELEASE</spring-cloud-alibaba-dependencies.version>-->
+        <spring-boot-dependencies.version>2.7.18</spring-boot-dependencies.version>
+        <spring-cloud-dependencies.version>2021.0.8</spring-cloud-dependencies.version>
+        <spring-cloud-alibaba-dependencies.version>2021.0.5.0</spring-cloud-alibaba-dependencies.version>
     </properties>
 
     <dependencyManagement>

@@ -1,5 +1,5 @@
 server:
-  port: 10000
+  port: 9500
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/mall_order?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
@@ -19,3 +19,8 @@ rocketmq:
 feign:
   sentinel:
     enabled: true
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 5000

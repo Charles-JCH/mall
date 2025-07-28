@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: coupon-service
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 172.31.105.105

@@ -1,31 +1,56 @@
 server:
-  port: 88
+  port: 9000
+  servlet:
+    encoding:
+      enabled: true
+      charset: UTF-8
+      force: true
+      force-request: true
+      force-response: true
 
 spring:
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
       routes:
-        - id: product-router
-          uri: lb://product-service
+        # 认证服务
+        - id: auth-router
+          uri: lb://auth-service
           predicates:
-            - Path=/api/product/**
+            - Path=/api/auth/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
-        - id: order-router
-          uri: lb://order-service
-          predicates:
-            - Path=/api/order/**
-          filters:
-            - RewritePath=/api/(?<segment>.*),/$\{segment}
-        - id: inventory-router
-          uri: lb://inventory-service
-          predicates:
-            - Path=/api/inventory/**
-          filters:
-            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        #  用户服务
         - id: user-router
           uri: lb://user-service
           predicates:
             - Path=/api/user/**
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
+        # 商品服务
+        - id: product-router
+          uri: lb://product-service
+          predicates:
+            - Path=/api/product/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        # 订单服务
+        - id: order-router
+          uri: lb://order-service
+          predicates:
+            - Path=/api/order/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+        # 库存服务
+        - id: inventory-router
+          uri: lb://inventory-service
+          predicates:
+            - Path=/api/inventory/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+secure:
+  ignore:
+    - /api/auth/**

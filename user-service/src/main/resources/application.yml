@@ -1,5 +1,5 @@
 server:
-  port: 12000
+  port: 9200
 
 spring:
   datasource:
@@ -7,6 +7,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*.xml

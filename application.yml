@@ -1,3 +1,0 @@
-jwt:
-  secret: 1qazxsw23edcvfr45tgbnhy67ujm123456789000000
-  expiration: 3600
