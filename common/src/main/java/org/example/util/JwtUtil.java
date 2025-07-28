@@ -19,8 +19,9 @@ public class JwtUtil {
     /**
      * 生成token
      *
-     * @param username
-     * @return
+     * @param username 用户名
+     * @param claims   claims
+     * @return token
      */
     public String generateToken(String username, Map<String, Object> claims) {
         return Jwts.builder()
@@ -36,7 +37,7 @@ public class JwtUtil {
      * 解析token
      *
      * @param token token
-     * @return Claims
+     * @return claims
      */
     private Claims parseToken(String token) {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();

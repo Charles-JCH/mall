@@ -10,7 +10,9 @@ import org.example.feign.IInventoryFeign;
 import org.example.feign.IProductFeign;
 import org.example.service.IOrderService;
 import org.example.util.Log;
+import org.example.vo.R;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ThreadPoolExecutor;
 
@@ -27,20 +28,29 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class OrderServiceImpl extends ServiceImpl<IOrderMapper, OrderInfo> implements IOrderService {
 
     @Autowired
-    IProductFeign productFeign;
+    private IProductFeign productFeign;
 
     @Autowired
-    IInventoryFeign inventoryFeign;
+    private IInventoryFeign inventoryFeign;
 
     @Autowired
-    ThreadPoolExecutor executor;
+    private RedisTemplate<String, String> redisTemplate;
 
     @Autowired
     RocketMQTemplate rocketMQTemplate;
 
+    @Autowired
+    private ThreadPoolExecutor executor;
+
     @Transactional
     @Override
-    public OrderInfo createOrder(Integer userId, Integer productId, Integer quantity) {
+    public OrderInfo createOrder(String orderToken, Integer userId, Integer productId, Integer quantity) {
+        String orderTokenStr = redisTemplate.opsForValue().get(orderToken);
+        if (orderTokenStr == null) {
+            Log.warn("请勿重复提交订单");
+            return null;
+        }
+
         OrderInfo order = new OrderInfo();
         order.setId(UUID.randomUUID().toString());
         order.setUserId(userId);
@@ -48,7 +58,7 @@ public class OrderServiceImpl extends ServiceImpl<IOrderMapper, OrderInfo> imple
         order.setQuantity(quantity);
         ProductDto productDto = productFeign.getProductById(productId).getData();
         if (productDto == null) {
-            Log.error("🔥 消息创建失败: 商品服务异常");
+            Log.error("订单创建失败, 未查询到商品信息, 商品ID: {}", productId);
             return null;
         }
         order.setPrice(productDto.getPrice());
@@ -56,9 +66,16 @@ public class OrderServiceImpl extends ServiceImpl<IOrderMapper, OrderInfo> imple
         // 0-待支付
         order.setStatus(0);
         this.save(order);
+        redisTemplate.delete(orderToken);
 
         // 锁定库存
-        inventoryFeign.lockInventory(productId, quantity);
+        R<String> result = inventoryFeign.lockInventory(productId, quantity);
+        if (result.getCode() == 400 || result.getCode() == 500) {
+            order.setStatus(2);
+            this.updateById(order);
+            Log.warn("库存锁定失败: 订单取消");
+            return order;
+        }
 
         // 保存当前线程的上下文交给 mq 的异步线程
         RequestContextTtl.set(RequestContextHolder.getRequestAttributes());
@@ -67,21 +84,8 @@ public class OrderServiceImpl extends ServiceImpl<IOrderMapper, OrderInfo> imple
         // 发送延时消息, 1 分钟后检查订单是否支付
         Message<String> message = MessageBuilder.withPayload(order.getId()).build();
         rocketMQTemplate.syncSend("order-timeout-topic", message, 3000, 5);
-        Log.debug("✅ 消息创建成功, 订单: " + order.getId());
+        Log.debug("订单超时处理完成, 订单ID: {}", order.getId());
         return order;
-    }
-
-    @Transactional
-    @Override
-    public void handlePaymentSuccess(String orderId) {
-        OrderInfo order = this.getById(orderId);
-        if (order != null && order.getStatus() == 0) {
-            order.setStatus(1); // 1-已支付
-            this.updateById(order);
-
-            // 调用库存服务减少库存（RPC 调用库存服务）
-            inventoryFeign.reduceInventory(order.getProductId(), order.getQuantity());
-        }
     }
 
     @Transactional
@@ -95,31 +99,5 @@ public class OrderServiceImpl extends ServiceImpl<IOrderMapper, OrderInfo> imple
             // 调用库存服务回滚库存（RPC 调用库存服务）
             inventoryFeign.unlockInventory(order.getProductId(), order.getQuantity());
         }
-    }
-
-    @Override
-    public List<OrderInfo> getAllOrder() {
-        return this.list();
-    }
-
-    @Override
-    public OrderInfo getOrderById(String id) {
-        return this.getById(id);
-    }
-
-    @Override
-    public boolean addOrder(OrderInfo orderInfo) {
-        return save(orderInfo);
-    }
-
-    @Override
-    public boolean updateOrderById(String id, OrderInfo orderInfo) {
-        orderInfo.setId(id);
-        return this.updateById(orderInfo);
-    }
-
-    @Override
-    public boolean deleteOrderById(String id) {
-        return this.removeById(id);
     }
 }

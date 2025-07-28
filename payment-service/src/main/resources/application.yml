@@ -2,11 +2,35 @@ alipay:
   app-id: '9021000144618378'
   merchant-private-key: 'MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCGtY4Uc2JPR251zzB9xccytr8h5bbbOh8VxwB8qVz/mdv+T+/w5NzmdhEvU+fN9wu0+oKoa0k+1XSwKMVtN/NCrGgfXA+UZpHM0lQ23kA6wLulNGdRDkgxqZ3sfOBvCUnKcWjhIfbyAZYdywz6+NUEYgGzocdP8J79ekl6b73l+gdI8KbeY+tgqZU7MKUyNUieIIHUdBaae3lNNpo27AaHUlKC8k4hU63qwshqiSEd9tD0kGaox+dDCilOGkyNG99GWDIy8LLM9LP+qH0PvBpf9JInuVcswbJW6NqyiQUeTyuPVI1fQPDQUMMeZLgtJ4SuRWwaYzG4aCnwLLCxdmk5AgMBAAECggEADLrBV1tj8dvtK0LN8USsQzWTsC9V7Td70oIAoMccW6b9a/W/1cK6wShtDUzffc4XlB2MFUA2JrLjGPZxWZXM7gL+v9/iNQLQSkuh26F67lJiKQVfsgAogFDn9H4Ec1msWG4JHCUqgcn2lpAmhNzYvFZKlN/3xq0VSRyyLti6WC357HoKcNkRayTj9Nao3NnJz5NesASNWcZak9xbr6AWsmma4HLtDT5igfuLPeE9yINs3xagwBtcDicmLluscLn7fas4yTZ9GbTvyQgH9uCCv5P5wf5Xoe7dXBis07MROzYNqjWqaGMQbv0fnRKu+3wlwY1y2TFvv1S5ZnuYEjeSpQKBgQDVZe03o2Xo2IToyhX29++GKTvI3JG6xeH0DCcpTNebWbvi5JrKEwRGSbdy5SSKZerL1K9YpI96smcVBnXW4SulS16jqfSI/20QF6CjAgVTONEduWl7zo6KJ/AB2vTU6OWNM59JIjuhrx6QfRZ/bLsf7zGaHqS8c6/W4HMpRGbc+wKBgQChmhivY9p9irwWPACGz/fadVc3EknkhLUee0P1MYT3Si4sEld0LOw/ZJuCGy2f3VMFZITr130+VDw4DoVMxdbWKnugIG6x9XW4koENULOcSGKFa/ObspbkGmKB767FV0wRWM0CgqdwsXBtJ7ie7gNDe4Y5dvUw0vDtCH2xBNLUWwKBgQCrw9oX0abCsBzy/06EtnaOh3v+pkOKkaLY/Ds9TAOzoJvR+m35PytOpCFMEtLBr105ad0lvXdbrGO6kbOiHSYzayInHDKfXvFbZZk/++1rWi0//rDAHbevzouqAqLVCQ1UBXwtsqdK8hjo9jZ4pH1OLArB4e55XajojUtEqTEepwKBgH9DVmtRLLCvP/4WlKeWQe9VdzCUg4KmC+iMVHFU5QzF62SjsSF5ezdVKK4mbyC1cHsPtSnx0tzyA1Z2AP3703tni2IICIS29FU9csokor3Rt1yxLfCQjQnnyWngcndQj0Qd9Z0jfW9fHVWo8Vifwgwzy/mXN/KSPE++3xU34jx/AoGBAKLqciprVxRbNrMiFlKOfjhIhPfaDzTw2uqCXRkk2a43WuXqRoUPhovaeB+DeOpceaKqK9lXlUpWRPgJFWnc7emUs4NZN0gMtmcmXjnwjJMGbHAE89WhLXeRvQjldUt+styxE175wpTQa0x/bh1L0LfuBpHg+WwaIfjg+0rw1z/Q'
   alipay-public-key: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlxHDaxr0ipW4Z+yRaayRRT/hygXhaUs7NSqt0iS0ns6ba/xa36k6Gx980VwkC2YoFoR4qqgnbwbRkSfV7OuAndxCbj+CeDLci43CVv0ctjy7Vo3BHqR2SXZ/6sEnabsIfVSZoj3jaiXM631z3qkkPe/FurLul4iRuzCV8c9Y+W+rrsIL1v/G1fL56HGkbxUgCIgOPwvzoZ/iLC0K93OzksJ7+vyXr82d2VrlWKTU7AjnoY8nbGpSa1CpWNvHROrIf9MA8+6GqFt2yUUPIkOwzet3sQ9/3HC8dq8MgbKnfZGtW9GwvzwruHu3kwg2Oru2KvhscoFi9AfP3A4V+su7cwIDAQAB'
-  notify-url: 'http://your-domain.com/notify'
-  return-url: 'http://your-domain.com/return'
+  notify-url: 'http://localhost:13000/alipay/notify'
+  return-url: 'http://localhost:13000/alipay/return'
   sign-type: 'RSA2'
   charset: 'utf-8'
   gateway-url: 'https://openapi-sandbox.dl.alipaydev.com/gateway.do'
+  format: 'json'
 
 server:
   port: 13000
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+spring:
+  thymeleaf:
+    cache: false
+    prefix: 'classpath:/templates/'
+    suffix: '.html'
+    mode: 'HTML'
+    encoding: 'UTF-8'
+    servlet:
+      content-type: 'text/html'
+
+feign:
+  sentinel:
+    enabled: true
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 5000

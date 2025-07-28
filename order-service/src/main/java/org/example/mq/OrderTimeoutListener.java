@@ -21,7 +21,7 @@ public class OrderTimeoutListener implements RocketMQListener<String> {
     public void onMessage(String orderId) {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         RequestContextTtl.set(requestAttributes);
-        Log.debug("🚀 消息消费成功, 订单ID: " + orderId);
+        Log.debug("订单超时处理开始, 订单ID: {}", orderId);
         orderService.handleOrderTimeout(orderId);
     }
 }

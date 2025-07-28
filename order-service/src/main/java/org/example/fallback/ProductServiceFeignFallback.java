@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductServiceFeignFallback implements IProductFeign {
     @Override
-    public R<ProductDto> getProductById(int id) {
+    public R<ProductDto> getProductById(Integer id) {
         return R.error(500, "Product service error");
     }
 }

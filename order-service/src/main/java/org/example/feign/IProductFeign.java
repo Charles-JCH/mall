@@ -13,5 +13,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface IProductFeign {
 
     @GetMapping("/product/{id}")
-    R<ProductDto> getProductById(@PathVariable("id") int id);
+    R<ProductDto> getProductById(@PathVariable("id") Integer id);
 }

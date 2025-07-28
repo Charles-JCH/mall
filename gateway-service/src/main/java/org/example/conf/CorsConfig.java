@@ -11,7 +11,6 @@ public class CorsConfig {
 
     @Bean
     public CorsWebFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         // 允许所有源访问
         config.addAllowedOrigin("*");
@@ -19,6 +18,7 @@ public class CorsConfig {
         config.addAllowedHeader("*");
         // 允许的请求方式
         config.addAllowedMethod("*");
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         // 允许跨域的路径
         source.registerCorsConfiguration("/**", config);
         return new CorsWebFilter(source);

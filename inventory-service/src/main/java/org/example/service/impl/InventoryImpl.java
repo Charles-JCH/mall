@@ -7,8 +7,6 @@ import org.example.entity.InventoryInfo;
 import org.example.service.IInventoryService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 public class InventoryImpl extends ServiceImpl<IInventoryMapper, InventoryInfo> implements IInventoryService {
     @Override
@@ -29,33 +27,6 @@ public class InventoryImpl extends ServiceImpl<IInventoryMapper, InventoryInfo> 
     public boolean reduceInventory(Integer productId, Integer quantity) {
         return this.update(new LambdaUpdateWrapper<InventoryInfo>()
                 .eq(InventoryInfo::getProductId, productId)
-                .setSql("reserve_stock = reserve_stock - " + quantity
-                        + ", stock = stock - " + quantity));
-    }
-
-    @Override
-    public List<InventoryInfo> getAllInventory() {
-        return this.list();
-    }
-
-    @Override
-    public InventoryInfo getInventoryById(Integer id) {
-        return this.getById(id);
-    }
-
-    @Override
-    public boolean addInventory(InventoryInfo inventoryInfo) {
-        return this.save(inventoryInfo);
-    }
-
-    @Override
-    public boolean updateInventoryById(Integer id, InventoryInfo inventoryInfo) {
-        inventoryInfo.setId(id);
-        return this.updateById(inventoryInfo);
-    }
-
-    @Override
-    public boolean deleteInventoryById(Integer id) {
-        return this.removeById(id);
+                .setSql("reserve_stock = reserve_stock - " + quantity + ", stock = stock - " + quantity));
     }
 }

@@ -8,9 +8,24 @@ import lombok.Data;
 @Data
 @TableName("inventory")
 public class InventoryInfo {
+    /**
+     * 主键
+     */
     @TableId(type = IdType.AUTO)
     private Integer id;
+
+    /**
+     * 商品id
+     */
     private Integer productId;
+
+    /**
+     * 库存
+     */
     private Integer stock;
+
+    /**
+     * 锁定库存
+     */
     private Integer reserveStock;
 }

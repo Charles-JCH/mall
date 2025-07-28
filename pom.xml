@@ -1,13 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>guli-test</artifactId>
+    <artifactId>mini-mall</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>guli-test</name>
+    <name>mini-mall</name>
 
     <modules>
         <module>common</module>
@@ -21,6 +23,8 @@
         <module>user-service</module>
         <!--13000-->
         <module>payment-service</module>
+        <!--14000-->
+        <module>sap-service</module>
         <!--88-->
         <module>gateway-service</module>
     </modules>

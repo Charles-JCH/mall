@@ -42,13 +42,17 @@ CREATE TABLE `order_items`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders`  (
-  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '订单ID',
+  `order_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '接口防刷(幂等性)',
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '订单ID',
   `user_id` bigint NOT NULL COMMENT '用户ID',
-  `total_amount` decimal(10, 2) NOT NULL COMMENT '订单总金额',
+  `product_id` bigint NOT NULL COMMENT '商品ID',
+  `quantity` int NOT NULL COMMENT '商品数量',
+  `price` decimal(10, 2) NOT NULL COMMENT '商品单价',
+  `total_price` decimal(10, 2) NOT NULL COMMENT '订单总金额',
   `status` tinyint NOT NULL DEFAULT 0 COMMENT '0: 未支付, 1: 已支付, 2: 已取消',
   `created_at` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`) USING BTREE
+  PRIMARY KEY (`order_token` DESC, `id` DESC) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------

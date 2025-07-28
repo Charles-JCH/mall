@@ -1,7 +1,5 @@
 package org.example.conf;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,9 +15,6 @@ import java.time.Duration;
 @Configuration
 @EnableCaching
 public class RedisCacheConfigurationConfig {
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Bean
     public RedisCacheConfiguration redisCacheConfiguration() {

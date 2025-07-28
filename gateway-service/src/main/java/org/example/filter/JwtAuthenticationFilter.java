@@ -4,6 +4,8 @@ import org.example.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
@@ -25,12 +27,21 @@ public class JwtAuthenticationFilter implements WebFilter {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
 
-        // 放行的路径
+        // OPTIONS请求, 放行
+        if (request.getMethod() == HttpMethod.OPTIONS) {
+            response.setStatusCode(HttpStatus.OK);
+            response.getHeaders().add("Access-Control-Allow-Origin", "*");
+            response.getHeaders().add("Access-Control-Allow-Methods", "*");
+            response.getHeaders().add("Access-Control-Allow-Headers", "*");
+            return response.setComplete();
+        }
+
+        // 登录接口, 放行
         if (request.getURI().getPath().startsWith("/api/user/login")) {
             return chain.filter(exchange);
         }
 
-        // 获取Authorization头部
+        // 获取token
         String authHeader = request.getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             String tokenIsNull = "{\"code\": 401, \"message\": \"Token is missing\", \"data\": null}";

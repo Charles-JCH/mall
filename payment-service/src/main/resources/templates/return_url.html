@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>电脑网站支付return_url</title>
+</head>
+<body>
+<div th:if="${signVerified}">
+    <p>支付宝交易号: <span th:text="${tradeNo}"></span></p>
+    <p>商户订单号: <span th:text="${outTradeNo}"></span></p>
+    <p>付款金额: <span th:text="${totalAmount}"></span></p>
+</div>
+<div th:unless="${signVerified}">
+    <p>验签失败</p>
+</div>
+</body>
+</html>
