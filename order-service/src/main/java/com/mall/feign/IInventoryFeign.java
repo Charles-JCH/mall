@@ -1,8 +1,14 @@
 package com.mall.feign;
 
+<<<<<<< HEAD:order-service/src/main/java/com/mall/feign/IInventoryFeign.java
 import com.mall.api.R;
 import com.mall.dto.InventoryDto;
 import com.mall.feign.fallback.InventoryServiceFeignFallback;
+=======
+import org.example.dto.InventoryDto;
+import org.example.fallback.InventoryServiceFeignFallback;
+import org.example.vo.R;
+>>>>>>> f8aa785079fdf04af6b6b245a8dc915ab9afc632:order-service/src/main/java/org/example/feign/IInventoryFeign.java
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.context.annotation.Primary;
 import org.springframework.web.bind.annotation.GetMapping;

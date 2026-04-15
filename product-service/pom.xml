@@ -4,7 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
+<<<<<<< HEAD
         <groupId>com.mall</groupId>
+=======
+        <groupId>org.example</groupId>
+>>>>>>> f8aa785079fdf04af6b6b245a8dc915ab9afc632
         <artifactId>mini-mall</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>

@@ -11,6 +11,18 @@ import com.mall.mapper.IOrderMapper;
 import com.mall.service.IOrderService;
 import com.mall.util.Log;
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
+<<<<<<< HEAD:order-service/src/main/java/com/mall/service/impl/OrderServiceImpl.java
+=======
+import org.example.conf.RequestContextTtl;
+import org.example.dao.IOrderMapper;
+import org.example.dto.ProductDto;
+import org.example.entiry.OrderInfo;
+import org.example.feign.IInventoryFeign;
+import org.example.feign.IProductFeign;
+import org.example.service.IOrderService;
+import org.example.util.Log;
+import org.example.vo.R;
+>>>>>>> f8aa785079fdf04af6b6b245a8dc915ab9afc632:order-service/src/main/java/org/example/service/impl/OrderServiceImpl.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.messaging.Message;

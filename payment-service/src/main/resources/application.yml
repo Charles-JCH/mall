@@ -34,3 +34,32 @@ alipay:
   charset: 'utf-8'
   gateway-url: 'https://openapi-sandbox.dl.alipaydev.com/gateway.do'
   format: 'json'
+<<<<<<< HEAD
+=======
+
+server:
+  port: 13000
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+
+spring:
+  thymeleaf:
+    cache: false
+    prefix: 'classpath:/templates/'
+    suffix: '.html'
+    mode: 'HTML'
+    encoding: 'UTF-8'
+    servlet:
+      content-type: 'text/html'
+
+feign:
+  sentinel:
+    enabled: true
+  client:
+    config:
+      default:
+        connect-timeout: 5000
+        read-timeout: 5000
+>>>>>>> f8aa785079fdf04af6b6b245a8dc915ab9afc632

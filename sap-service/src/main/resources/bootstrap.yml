@@ -1,8 +1,11 @@
 spring:
   application:
     name: sap-service
+<<<<<<< HEAD
   profiles:
     active: dev
+=======
+>>>>>>> f8aa785079fdf04af6b6b245a8dc915ab9afc632
   cloud:
     nacos:
       discovery:

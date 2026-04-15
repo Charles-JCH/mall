@@ -1,4 +1,8 @@
+<<<<<<< HEAD:order-service/src/main/java/com/mall/config/RedisTemplateConfig.java
 package com.mall.config;
+=======
+package org.example.conf;
+>>>>>>> f8aa785079fdf04af6b6b245a8dc915ab9afc632:order-service/src/main/java/org/example/conf/RedisTemplateConfig.java
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
